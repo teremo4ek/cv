@@ -1,0 +1,165 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[margin=2cm]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+
+% ── Colors ──────────────────────────────────────────────
+\definecolor{accent}{HTML}{2C3E50}
+\definecolor{linkcolor}{HTML}{2980B9}
+\definecolor{graytext}{HTML}{555555}
+
+% ── Hyperlinks ──────────────────────────────────────────
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkcolor,
+    linkcolor=accent,
+}
+
+% ── Item styling ───────────────────────────────────────
+\setlist[itemize]{
+    leftmargin=1.4em,
+    itemsep=1pt,
+    parsep=0pt,
+    topsep=2pt,
+    labelsep=4pt,
+}
+\setlength{\itemindent}{0pt}
+
+% ── Section command ────────────────────────────────────
+\newcommand{\heading}[1]{%
+    \vspace{8pt}%
+    {\color{accent}\large\bfseries #1}\\[-2pt]%
+    \textcolor{accent}{\rule{\textwidth}{0.4pt}}%
+    \vspace{4pt}%
+}
+
+% ── Role entry command ─────────────────────────────────
+\newcommand{\roleentry}[3]{%
+    \vspace{2pt}%
+    {#1 \hfill {\small\color{graytext}#3}}\\[1pt]%
+    {\textbf{#2}}%
+    \vspace{1pt}%
+}
+
+\begin{document}
+
+% ── Header ──────────────────────────────────────────────
+\begin{center}
+    {\color{accent}\LARGE\bfseries Yury Bely}\\[8pt]
+    {\small
+    \href{mailto:yury.bely@icloud.com}{yury.bely@icloud.com}
+    \enspace\color{graytext}$\bullet$\color{black}\enspace
+    \href{https://linkedin.com/in/yurybely}{linkedin.com/in/yurybely}
+    \enspace\color{graytext}$\bullet$\color{black}\enspace
+    \href{https://github.com/teremo4ek}{github.com/teremo4ek}}
+\end{center}
+
+\vspace{8pt}
+
+\noindent\color{graytext}\small
+Software Engineer with 15+ years of experience in systems and cross-platform development (C++, Rust).\\
+Built desktop, mobile, and real-time applications across Windows, Linux, macOS, Android, and iOS.\\
+Strong background in performance optimization, networking, and low-level system architecture.\\
+Experience with AI-assisted development and LLM integration.
+
+% ── Experience ──────────────────────────────────────────
+\heading{Professional Experience}
+
+\roleentry{ScienceSoft | Global IT software development}{Rust Developer}{2024 -- 2025}
+\begin{itemize}
+    \item Built cross-platform desktop applications using Rust, Tauri, and Vue.js for Windows, macOS, and Linux.
+    \item Reduced application memory footprint by \textasciitilde 10\% compared to Electron-based alternatives.
+    \item Improved startup time by \textasciitilde 2x through native integration and optimized resource loading.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Senior C++ Developer}{2021 -- 2024}
+\begin{itemize}
+    \item Contributed to development of Oracle-compatible functionality for an enterprise RDBMS, implementing support for PL/SQL-like syntax and behavior.
+    \item Built an Oracle compatibility mode enabling seamless migration by switching connection strings without changes to business logic or SQL queries.
+    \item Implemented and validated support for hundreds of SQL/PLSQL constructs, including procedures, functions, and triggers.
+    \item Resolved compatibility edge cases between Oracle and target DB, ensuring consistent query execution behavior.
+    \item Reduced migration effort from months to days for existing enterprise systems.
+    \item Ensured full backward compatibility with native database mode.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Senior C++ Developer}{2017 -- 2021}
+\begin{itemize}
+    \item Collaborated in a 30+ engineer cross-functional team to build a secure cross-platform video conferencing application.
+    \item Built and maintained a shared C++ core library used across 4 platforms (iOS, Android, Windows, macOS), reducing code duplication and ensuring consistent behavior.
+    \item Introduced adaptive media management supporting real-time speaker detection in calls with 5+ participants.
+    \item Implemented local storage handling thousands of messages and session records per user, improving data reliability.
+    \item Strengthened end-to-end encryption by replacing WebRTC SSL with OpenSSL, improving security compliance and control over cryptographic stack.
+    \item Resolved concurrency issues and reduced crash rate on mobile platforms by \textasciitilde 25\%.
+    \item Created internal testing and support tools, improving SDK reliability.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Senior C++ Developer}{2016 -- 2017}
+\begin{itemize}
+    \item Built a medical software system for auditory hallucination treatment with real-time VoIP and voice transformation.
+    \item Designed system architecture and developed a QML-based UI.
+    \item Prototyped a system to improve GPS positioning accuracy using Real-Time Kinematic (RTK) and Continuously Operating Reference Stations (CORS) techniques.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Xamarin Developer, .NET Developer}{2015 -- 2016}
+\begin{itemize}
+    \item Built mobile applications integrating GPS, camera, and push notifications.
+    \item Published applications to App Store and Google Play.
+    \item Created an interactive 3D exhibition preview application in Unity.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Senior C++ Developer}{2014 -- 2015}
+\begin{itemize}
+    \item Built a desktop music streaming application based on WebKit with deep OS-level integration.
+    \item Architected and built a real-time desktop and webcam streaming application.
+    \item Implemented video capture and frame processing using OpenCV.
+    \item Added audio streaming and mixing via GStreamer/FMOD.
+    \item Integrated RTSP client for real-time video transmission.
+    \item Delivered a Windows-based solution using C++, Qt, and STL.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{Senior C++ Developer}{2012 -- 2014}
+\begin{itemize}
+    \item Ported a feature-rich Chromium-based browser to Windows, adding native support for torrent handling without the need for third-party applications.
+    \item Contributed to interface localization and platform-specific adaptations.
+    \item Built a video search and download manager with support for multiple formats and integration with leading video platforms (YouTube, Vimeo, Dailymotion, etc.), featuring an embedded video player.
+    \item Built a feature-rich download manager with BitTorrent support and plugin architecture.
+\end{itemize}
+
+\roleentry{ScienceSoft | Global IT software development}{C++ Developer}{2011 -- 2012}
+\begin{itemize}
+    \item Integrated and maintained social network functionality via the Facebook API.
+    \item Developed JavaScript solutions for interacting with Facebook services, improving automation and efficiency.
+\end{itemize}
+
+\roleentry{Science Research Institute of Means of Automation}{Junior C++ Developer}{2007 -- 2011}
+\begin{itemize}
+    \item Built a cross-platform application using Qt, implementing a complex UI and highly customized, non-standard design solutions.
+\end{itemize}
+
+% ── Education ───────────────────────────────────────────
+\heading{Education}
+
+\roleentry{Belarusian State University of Informatics and Radioelectronics}{Bachelor of Computer Science}{2002 -- 2007}
+
+% ── Languages ───────────────────────────────────────────
+\heading{Languages}
+
+English (B2), German (A1)
+
+% ── Skills ──────────────────────────────────────────────
+\heading{Skills}
+
+\noindent
+\textbf{Languages:} C++, Rust, Python, C\#, Swift, SQL, JS/TS\\[2pt]
+\textbf{Frameworks:} Qt, QML, Tauri, Djinni, OpenCV, WebRTC\\[2pt]
+\textbf{Databases:} SQLite, PostgreSQL, Oracle\\[2pt]
+\textbf{Platforms:} Windows, Linux, macOS, Android, iOS\\[2pt]
+\textbf{Tools:} Git, Docker, CMake, CI/CD, VS, Xcode\\[2pt]
+\textbf{AI \& LLM:} Claude Code, Copilot, ChatGPT, Ollama, prompt engineering
+
+\end{document}
