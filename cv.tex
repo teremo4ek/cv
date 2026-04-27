@@ -33,7 +33,8 @@
 % ── Section command ────────────────────────────────────
 \newcommand{\heading}[1]{%
     \vspace{8pt}%
-    {\color{accent}\large\bfseries #1}\\[-2pt]%
+    \begin{center}{\color{accent}\large\bfseries #1}\end{center}%
+    \vspace{-8pt}%
     \textcolor{accent}{\rule{\textwidth}{0.4pt}}%
     \vspace{4pt}%
 }
@@ -152,14 +153,15 @@ Experience with AI-assisted development and LLM integration.
 English (B2), German (A1)
 
 % ── Skills ──────────────────────────────────────────────
-\heading{Skills}
+\heading{Skills \& Other}
 
 \noindent
-\textbf{Languages:} C++, Rust, Python, C\#, Swift, SQL, JS/TS\\[2pt]
-\textbf{Frameworks:} Qt, QML, Tauri, Djinni, OpenCV, WebRTC\\[2pt]
+\textbf{Languages:} C++, Rust, Python, C\#, Swift, SQL, JavaScript/TypeScript\\[2pt]
+\textbf{Frameworks \& Tools:} Qt, QML, Tauri, Djinni, OpenCV, WebRTC\\[2pt]
 \textbf{Databases:} SQLite, PostgreSQL, Oracle\\[2pt]
 \textbf{Platforms:} Windows, Linux, macOS, Android, iOS\\[2pt]
-\textbf{Tools:} Git, Docker, CMake, CI/CD, VS, Xcode\\[2pt]
-\textbf{AI \& LLM:} Claude Code, Copilot, ChatGPT, Ollama, prompt engineering
+\textbf{Tools:} Git, Docker, CMake, CI/CD, Visual Studio, Xcode\\[2pt]
+\textbf{AI \& LLM Tools:} Claude Code, GitHub Copilot, ChatGPT, local LLMs (Ollama)\\[2pt]
+\textbf{AI/ML:} LLM API integration, prompt engineering, AI-assisted development workflows
 
 \end{document}
