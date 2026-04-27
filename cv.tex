@@ -1,6 +1,6 @@
 \documentclass[10pt, a4paper]{article}
 
-\usepackage[margin=2cm]{geometry}
+\usepackage[margin=2cm, top=1.4cm]{geometry}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{xcolor}
@@ -32,7 +32,7 @@
 
 % ── Section command ────────────────────────────────────
 \newcommand{\heading}[1]{%
-    \vspace{8pt}%
+    \vspace{4pt}%
     \begin{center}{\color{accent}\large\bfseries #1}\end{center}%
     \vspace{-8pt}%
     \textcolor{accent}{\rule{\textwidth}{0.4pt}}%
@@ -41,8 +41,8 @@
 
 % ── Role entry command ─────────────────────────────────
 \newcommand{\roleentry}[3]{%
-    \vspace{2pt}%
-    {#1 \hfill {\small\color{graytext}#3}}\\[1pt]%
+    \vspace{8pt}%
+    {\normalsize #1 \hfill {\small\color{graytext}#3}}\\[1pt]%
     {\textbf{#2}}%
     \vspace{1pt}%
 }
@@ -60,7 +60,7 @@
     \href{https://github.com/teremo4ek}{github.com/teremo4ek}}
 \end{center}
 
-\vspace{8pt}
+\vspace{4pt}
 
 \noindent\color{graytext}\small
 Software Engineer with 15+ years of experience in systems and cross-platform development (C++, Rust).\\
