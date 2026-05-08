@@ -19,7 +19,7 @@ jobs:
       - name: Compile LaTeX Document
         uses: xu-cheng/latex-action@v2
         with:
-          root_file: ${{ env.FILE }}
+          root_file: ${{ env.FILE }}.tex
           working_directory: ${{ env.DIR }}
 
       - name: move
