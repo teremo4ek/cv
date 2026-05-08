@@ -1,31 +1,38 @@
 name: build
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: ["main", "master"]
+
 permissions:
   contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+env:
+  DIR: .
+  FILE: cv
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      DIR: .
-      FILE: cv
     steps:
-      - name: Set up Git repository
+      - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Compile LaTeX Document
+      - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v2
         with:
           root_file: ${{ env.FILE }}.tex
           working_directory: ${{ env.DIR }}
 
-      - name: move
+      - name: Stage PDF for upload
         run: mkdir -p github_artifacts && mv ${{ env.DIR }}/${{ env.FILE }}.pdf ./github_artifacts/
 
-      - name: Upload PDF Artifact
+      - name: Upload PDF artifact
         uses: actions/upload-artifact@v7
         with:
           name: ${{ env.FILE }}.pdf
@@ -35,16 +42,13 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-      - uses: actions/download-artifact@v8
+      - name: Download PDF artifact
+        uses: actions/download-artifact@v8
         with:
-          path: github_artifacts
+          name: ${{ env.FILE }}.pdf
+          path: github_deploy
 
-      - name: move
-        run: mkdir -p github_deploy && mv github_artifacts/*/* github_deploy
-
-      - name: deploy on orphan branch
+      - name: Deploy to build branch
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
