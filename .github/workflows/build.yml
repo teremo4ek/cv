@@ -6,7 +6,9 @@ on:
     branches: ["main", "master"]
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
   group: pages
@@ -29,30 +31,19 @@ jobs:
           root_file: ${{ env.FILE }}.tex
           working_directory: ${{ env.DIR }}
 
-      - name: Stage PDF for upload
-        run: mkdir -p github_artifacts && mv ${{ env.DIR }}/${{ env.FILE }}.pdf ./github_artifacts/
-
-      - name: Upload PDF artifact
-        uses: actions/upload-artifact@v7
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          name: ${{ env.FILE }}.pdf
-          path: ./github_artifacts
+          path: ${{ env.DIR }}/${{ env.FILE }}.pdf
 
   deploy:
     needs: [build]
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Download PDF artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: ${{ env.FILE }}.pdf
-          path: github_deploy
-
-      - name: Deploy to build branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./github_deploy
-          publish_branch: build
-          force_orphan: true
-          enable_jekyll: true
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
