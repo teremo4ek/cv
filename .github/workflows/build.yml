@@ -35,7 +35,7 @@ jobs:
         run: mkdir -p _pages && cp ${{ env.DIR }}/${{ env.FILE }}.pdf _pages/
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: _pages
 
