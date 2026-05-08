@@ -31,10 +31,13 @@ jobs:
           root_file: ${{ env.FILE }}.tex
           working_directory: ${{ env.DIR }}
 
+      - name: Stage PDF for Pages
+        run: mkdir -p _pages && cp ${{ env.DIR }}/${{ env.FILE }}.pdf _pages/
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ${{ env.DIR }}/${{ env.FILE }}.pdf
+          path: _pages
 
   deploy:
     needs: [build]
