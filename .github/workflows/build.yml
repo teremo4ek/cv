@@ -16,7 +16,7 @@ concurrency:
 
 env:
   DIR: .
-  FILE: cv
+  FILE: yury_bely_cv
 
 jobs:
   build:
