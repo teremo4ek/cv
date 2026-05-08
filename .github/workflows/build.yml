@@ -31,8 +31,14 @@ jobs:
           root_file: ${{ env.FILE }}.tex
           working_directory: ${{ env.DIR }}
 
-      - name: Stage PDF for Pages
-        run: mkdir -p _pages && cp ${{ env.DIR }}/${{ env.FILE }}.pdf _pages/
+      - name: Install Pandoc
+        run: sudo apt-get install -y pandoc
+
+      - name: Convert LaTeX to DOCX
+        run: pandoc ${{ env.DIR }}/${{ env.FILE }}.tex -o ${{ env.DIR }}/${{ env.FILE }}.docx
+
+      - name: Stage files for Pages
+        run: mkdir -p _pages && cp ${{ env.DIR }}/${{ env.FILE }}.pdf ${{ env.DIR }}/${{ env.FILE }}.docx _pages/
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v5
