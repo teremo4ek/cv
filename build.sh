@@ -2,7 +2,7 @@
 set -euo pipefail
 
 TEX_FILE="${1:-yury_bely_cv.tex}"
-OUT_DIR="output"
+OUT_DIR="${2:-output}"
 TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 BASENAME=$(basename "$TEX_FILE" .tex)
 

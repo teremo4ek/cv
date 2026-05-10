@@ -154,6 +154,6 @@ def tailor_resume(
         import subprocess
 
         logger.info("Building PDF...")
-        subprocess.run(["bash", "build.sh", str(out)], check=True)
+        subprocess.run(["bash", "build.sh", str(out), str(out.parent)], check=True)
 
     return out
