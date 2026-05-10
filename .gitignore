@@ -5,3 +5,4 @@ output/
 manual/BY.pdf
 .env
 job_descriptions/
+__pycache__/
