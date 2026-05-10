@@ -3,3 +3,6 @@ output/
 .venv/
 .claude/
 manual/BY.pdf
+.env
+job_descriptions/
+__pycache__/
