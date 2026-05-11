@@ -1,32 +1,43 @@
-"""LaTeX section extraction and replacement utilities."""
+"""LaTeX section extraction and replacement utilities using %%TAG%% markers."""
+
+import re
+
+_TAG_BEGIN = re.compile(r"^%\s*%%(\w+)_BEGIN%%\s*$")
+_TAG_END = re.compile(r"^%\s*%%(\w+)_END%%\s*$")
+
+
+def _find_all_tags(lines: list[str]) -> dict[str, tuple[int, int]]:
+    """Scan for %%TAG_BEGIN%% / %%TAG_END%% markers, return {name: (begin, end)}."""
+    opens: dict[str, int] = {}
+    ranges: dict[str, tuple[int, int]] = {}
+
+    for i, line in enumerate(lines):
+        m = _TAG_BEGIN.match(line.strip())
+        if m:
+            opens[m.group(1)] = i
+            continue
+        m = _TAG_END.match(line.strip())
+        if m:
+            name = m.group(1)
+            if name in opens:
+                ranges[name] = (opens[name], i)
+
+    return ranges
 
 
 def extract_section_ranges(lines: list[str]) -> dict:
-    """Find summary and skills line ranges by scanning for anchor markers."""
-    ranges = {}
+    """Find summary and skills line ranges using %%TAG%% markers."""
+    ranges = _find_all_tags(lines)
 
-    for i, line in enumerate(lines):
-        if line.strip() == r"\noindent\color{graytext}\small" and i < 100:
-            for j in range(i + 1, min(i + 10, len(lines))):
-                if lines[j].strip().startswith("%"):
-                    ranges["summary"] = (i, j)
-                    break
-            break
+    if "SUMMARY" not in ranges:
+        raise ValueError("Could not locate %%SUMMARY_BEGIN/END%% tags in template")
+    if "SKILLS" not in ranges:
+        raise ValueError("Could not locate %%SKILLS_BEGIN/END%% tags in template")
 
-    for i, line in enumerate(lines):
-        if r"\heading{Technical Skills}" in line:
-            for j in range(i + 1, min(i + 20, len(lines))):
-                if lines[j].strip() == r"\end{document}":
-                    ranges["skills"] = (i + 1, j)
-                    break
-            break
-
-    if "summary" not in ranges:
-        raise ValueError("Could not locate Summary section in template")
-    if "skills" not in ranges:
-        raise ValueError("Could not locate Technical Skills section in template")
-
-    return ranges
+    return {
+        "summary": ranges["SUMMARY"],
+        "skills": ranges["SKILLS"],
+    }
 
 
 def extract_sections(lines: list[str], ranges: dict) -> dict:
@@ -34,23 +45,18 @@ def extract_sections(lines: list[str], ranges: dict) -> dict:
     s_start, s_end = ranges["summary"]
     k_start, k_end = ranges["skills"]
     return {
-        "summary": "".join(lines[s_start:s_end]),
-        "skills": "".join(lines[k_start:k_end]),
+        "summary": "".join(lines[s_start + 1 : s_end]),
+        "skills": "".join(lines[k_start + 1 : k_end]),
     }
 
 
 def extract_experience(lines: list[str]) -> str:
     """Extract the Work Experience section for LLM context."""
-    start = end = None
-    for i, line in enumerate(lines):
-        if r"\heading{Work Experience}" in line:
-            start = i
-        if start is not None and "% ── Education" in line:
-            end = i
-            break
-    if start is None or end is None:
+    ranges = _find_all_tags(lines)
+    if "EXPERIENCE" not in ranges:
         return ""
-    return "".join(lines[start:end])
+    start, end = ranges["EXPERIENCE"]
+    return "".join(lines[start + 1 : end])
 
 
 def parse_known_skills(skills_text: str) -> set[str]:
@@ -79,13 +85,15 @@ def replace_sections(
     result = lines.copy()
 
     s_start, s_end = ranges["skills"]
-    result[s_start:s_end] = new_skills.splitlines(keepends=True)
-    if not new_skills.endswith("\n"):
-        result.insert(s_start + len(new_skills.splitlines()), "\n")
+    replacement = new_skills.splitlines(keepends=True)
+    result[s_start + 1 : s_end] = replacement
+    if new_skills and not new_skills.endswith("\n"):
+        result.insert(s_start + 1 + len(replacement), "\n")
 
     s_start, s_end = ranges["summary"]
-    result[s_start:s_end] = new_summary.splitlines(keepends=True)
-    if not new_summary.endswith("\n"):
-        result.insert(s_start + len(new_summary.splitlines()), "\n")
+    replacement = new_summary.splitlines(keepends=True)
+    result[s_start + 1 : s_end] = replacement
+    if new_summary and not new_summary.endswith("\n"):
+        result.insert(s_start + 1 + len(replacement), "\n")
 
     return result
